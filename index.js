@@ -52,7 +52,3 @@ const game = () => {
   console.log(`User chose: ${userChoice}\nCPU chose: ${computerChoice}`);
   console.log(gameLogic(computerChoice, userChoice));
 };
-
-game();
-game();
-game();
