@@ -3,14 +3,7 @@ const choices = ['rock', 'paper', 'scissors'];
 const getComputerChoice = () =>
   choices[Math.floor(Math.random() * choices.length)];
 
-const getUserChoice = () => {
-  const userInput = prompt('Choose: Rock, Paper or Scissor.').toLowerCase();
-  if (choices.indexOf(userInput) != -1) return userInput;
-  else {
-    alert('Not a proper input, please reload!');
-    return 'Error';
-  }
-};
+const setUserChoice = (userChoice) => {};
 
 const gameLogic = (computerChoice, userChoice) => {
   if (computerChoice === userChoice) {
@@ -46,9 +39,25 @@ const gameLogic = (computerChoice, userChoice) => {
   }
 };
 
-const game = () => {
+const game = (userChoice) => {
   const computerChoice = getComputerChoice();
-  const userChoice = getUserChoice();
   console.log(`User chose: ${userChoice}\nCPU chose: ${computerChoice}`);
   console.log(gameLogic(computerChoice, userChoice));
 };
+
+let userChoice = ''; // Setting up a global variable
+
+const buttonClass = document.querySelectorAll('.choice-btn');
+
+buttonClass.forEach((button) =>
+  button.addEventListener('click', () => {
+    const messageSpan = document.querySelector('.msg');
+    messageSpan.textContent = `You chose: ${button.outerText.toLowerCase()}`;
+
+    // alert(`You chose:: ${button.outerText.toLowerCase()}`);
+    console.log(button.outerText);
+    userChoice = button.outerText.toLowerCase();
+    console.log(userChoice);
+    game(userChoice);
+  })
+);
