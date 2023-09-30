@@ -2,3 +2,9 @@
   text-align: center;
   padding: 20px;
 }
+
+.scores {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}

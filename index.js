@@ -1,7 +1,42 @@
-const choices = ['rock', 'paper', 'scissors'];
+// Global Variables
+let userChoice = '';
+let userScore = 0;
+let cpuScore = 0;
+
+// Selectors
+const buttonClass = document.querySelectorAll('.choice-btn');
+const userScoreSelector = document.querySelector('.user-score');
+const cpuScoreSelector = document.querySelector('.cpu-score');
+
+const userChoiceSelector = document.querySelector('#user-choice');
+const cpuChoiceSelector = document.querySelector('#cpu-choice');
+
+const CHOICES = ['rock', 'paper', 'scissors'];
+
+window.onload = () => {
+  console.log('App loaded!');
+  userScoreSelector.textContent = userScore;
+  cpuScoreSelector.textContent = cpuScore;
+};
+
+buttonClass.forEach((button) =>
+  button.addEventListener('click', () => {
+    const messageSpan = document.querySelector('.msg');
+    messageSpan.textContent = '';
+    messageSpan.textContent = `You chose: ${button.outerText.toLowerCase()}`;
+
+    // alert(`You chose:: ${button.outerText.toLowerCase()}`);
+    console.log(button.outerText);
+    userChoice = button.outerText.toLowerCase();
+    console.log(userChoice);
+    game(userChoice);
+  })
+);
+
+// TODO: Work on the logic for event listeners and make the UI more softer
 
 const getComputerChoice = () =>
-  choices[Math.floor(Math.random() * choices.length)];
+  CHOICES[Math.floor(Math.random() * CHOICES.length)];
 
 const setUserChoice = (userChoice) => {};
 
@@ -44,20 +79,3 @@ const game = (userChoice) => {
   console.log(`User chose: ${userChoice}\nCPU chose: ${computerChoice}`);
   console.log(gameLogic(computerChoice, userChoice));
 };
-
-let userChoice = ''; // Setting up a global variable
-
-const buttonClass = document.querySelectorAll('.choice-btn');
-
-buttonClass.forEach((button) =>
-  button.addEventListener('click', () => {
-    const messageSpan = document.querySelector('.msg');
-    messageSpan.textContent = `You chose: ${button.outerText.toLowerCase()}`;
-
-    // alert(`You chose:: ${button.outerText.toLowerCase()}`);
-    console.log(button.outerText);
-    userChoice = button.outerText.toLowerCase();
-    console.log(userChoice);
-    game(userChoice);
-  })
-);
