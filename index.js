@@ -2,6 +2,7 @@
 let userChoice = '';
 let userScore = 0;
 let cpuScore = 0;
+let gameOverIndicator = false; // Indicates if any one player has 5 points.
 
 // Selectors
 const buttonClass = document.querySelectorAll('.choice-btn');
@@ -10,6 +11,8 @@ const cpuScoreSelector = document.querySelector('.cpu-score');
 
 const userChoiceSelector = document.querySelector('#user-choice');
 const cpuChoiceSelector = document.querySelector('#cpu-choice');
+
+const resultSelector = document.querySelector('#result');
 
 const CHOICES = ['rock', 'paper', 'scissors'];
 
@@ -21,61 +24,68 @@ window.onload = () => {
 
 buttonClass.forEach((button) =>
   button.addEventListener('click', () => {
-    const messageSpan = document.querySelector('.msg');
-    messageSpan.textContent = '';
-    messageSpan.textContent = `You chose: ${button.outerText.toLowerCase()}`;
+    userChoiceSelector.textContent = '';
+    cpuChoiceSelector.textContent = '';
+
+    userChoice = button.outerText.toLowerCase().trim();
+    const cpuChoice = getComputerChoice();
+
+    setTimeout(() => {
+      userChoiceSelector.textContent = `You chose: ${userChoice}`;
+      cpuChoiceSelector.textContent = `CPU chose: ${cpuChoice}`;
+    }, 100);
+
+    setTimeout(() => {
+      // gameLogic(cpuChoice, userChoice);
+      if (gameOverIndicator) {
+        if (cpuScore > userScore) alert('CPU wins!');
+        else alert('User wins');
+      } else {
+        // gameLogic(cpuChoice, userChoice);
+        const result = game(userChoice, cpuChoice);
+        console.log(result);
+        if (result === 'user') {
+          resultSelector.textContent = `User won this round! Play on.`;
+          userScoreSelector.textContent = ++userScore;
+        } else if (result === 'cpu') {
+          resultSelector.textContent = `CPU won this round! Play on.`;
+          cpuScoreSelector.textContent = ++cpuScore;
+        } else {
+          resultSelector.textContent = 'Draw! Play on.';
+        }
+
+        if (cpuScore === 5 || userScore === 5) {
+          resultSelector.textContent = `${result.toUpperCase()} won the game! Please refresh.`;
+          buttonClass.forEach((button) => (button.disabled = true));
+          gameOverIndicator = true;
+        }
+      }
+    }, 200);
 
     // alert(`You chose:: ${button.outerText.toLowerCase()}`);
     console.log(button.outerText);
-    userChoice = button.outerText.toLowerCase();
-    console.log(userChoice);
-    game(userChoice);
+
+    // console.log(userChoice);
+    // game(userChoice);
   })
 );
-
-// TODO: Work on the logic for event listeners and make the UI more softer
 
 const getComputerChoice = () =>
   CHOICES[Math.floor(Math.random() * CHOICES.length)];
 
-const setUserChoice = (userChoice) => {};
-
-const gameLogic = (computerChoice, userChoice) => {
-  if (computerChoice === userChoice) {
-    alert(`Both chose ${computerChoice}! It's a draw!`);
-    return 'Draw';
+const game = (userChoice, cpuChoice) => {
+  console.log(userChoice, cpuChoice);
+  if (userChoice === 'rock') {
+    if (cpuChoice === 'rock') return 'draw';
+    else if (cpuChoice === 'scissors') return 'user';
+    else return 'cpu';
+  } else if (userChoice === 'paper') {
+    if (cpuChoice === 'paper') return 'draw';
+    else if (cpuChoice === 'rock') return 'user';
+    else return 'cpu';
   } else {
-    if (computerChoice === 'rock') {
-      userChoice === 'paper'
-        ? alert(
-            `User chose ${userChoice} and CPU chose ${computerChoice}, so user wins!`
-          )
-        : alert(
-            `User chose ${userChoice} and CPU chose ${computerChoice}, so CPU wins`
-          );
-    } else if (computerChoice === 'paper') {
-      userChoice === 'scissors'
-        ? alert(
-            `User chose ${userChoice} and CPU chose ${computerChoice}, so user wins!`
-          )
-        : alert(
-            `User chose ${userChoice} and CPU chose ${computerChoice}, so CPU wins`
-          );
-    } else {
-      userChoice === 'rock'
-        ? alert(
-            `User chose ${userChoice} and CPU chose ${computerChoice}, so user wins!`
-          )
-        : alert(
-            `User chose ${userChoice} and CPU chose ${computerChoice}, so CPU wins`
-          );
-    }
-    return 'Not a Draw';
+    if (cpuChoice === 'scissors') return 'draw';
+    else if (cpuChoice === 'paper') return 'user';
+    else return 'cpu';
   }
-};
-
-const game = (userChoice) => {
-  const computerChoice = getComputerChoice();
-  console.log(`User chose: ${userChoice}\nCPU chose: ${computerChoice}`);
-  console.log(gameLogic(computerChoice, userChoice));
 };

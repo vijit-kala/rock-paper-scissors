@@ -10,15 +10,34 @@
     <div class="app">
       <h3>Rock | Paper | Scissors</h3>
       <div class="btn-container">
-        <button class="choice-btn" id="rock-btn" type="button">Rock</button>
-        <button class="choice-btn" id="paper-btn" type="button">Paper</button>
-        <button class="choice-btn" id="scissors-btn" type="button">
+        <button
+          class="choice-btn fa-regular fa-hand-back-fist"
+          id="rock-btn"
+          type="button"
+        >
+          Rock
+        </button>
+        <button
+          class="choice-btn fa-regular fa-hand"
+          id="paper-btn"
+          type="button"
+        >
+          Paper
+        </button>
+        <button
+          class="choice-btn fa-regular fa-hand-scissors"
+          id="scissors-btn"
+          type="button"
+        >
           Scissors
         </button>
 
         <div class="msg-container">
           <span class="msg" id="user-choice"></span>
+          <br />
           <span class="msg" id="cpu-choice"></span>
+          <br />
+          <span class="msg" id="result"></span>
         </div>
 
         <div class="score-container">
@@ -31,5 +50,9 @@
       </div>
     </div>
     <script src="index.js"></script>
+    <script
+      src="https://kit.fontawesome.com/046bfaf5b2.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
